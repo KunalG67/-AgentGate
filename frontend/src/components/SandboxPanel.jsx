@@ -213,6 +213,7 @@ function SandboxPanel({ onClose }) {
     const stepUp = !!(d?.step_up_required || payload?.step_up_required);
     const status = stepUp ? "stepup" : allowed ? "allowed" : "blocked";
     const rule = d?.rule || null;
+    const matched = d?.matched;
 
     return (
       <div style={s.resultBox(status)}>
@@ -233,10 +234,10 @@ function SandboxPanel({ onClose }) {
         {status !== "allowed" && (
           <div style={{ marginTop: "10px", fontSize: "10px", color: "#4a6080" }}>
             <div>{d?.message || "Agent action was intercepted by AgentGate"}</div>
-            {rule?.id != null && <div style={{ marginTop: "6px" }}>{`Rule: #${rule.id}`}</div>}
-            {rule?.condition && <div style={{ marginTop: "6px" }}>{`Condition: ${rule.condition}`}</div>}
-            {rule?.effect && <div style={{ marginTop: "6px" }}>{`Effect: ${rule.effect}`}</div>}
-            <div style={{ marginTop: "6px" }}>{`Reason: ${rule?.reason || payload?.reason || "Blocked by policy."}`}</div>
+            {matched && rule?.id != null && <div style={{ marginTop: "6px" }}>{`Rule: #${rule.id}`}</div>}
+            {matched && rule?.condition && <div style={{ marginTop: "6px" }}>{`Condition: ${rule.condition}`}</div>}
+            {matched && rule?.effect && <div style={{ marginTop: "6px" }}>{`Effect: ${rule.effect}`}</div>}
+            <div style={{ marginTop: "6px" }}>{`Reason: ${(matched && rule?.reason) || payload?.reason || "Blocked by policy."}`}</div>
           </div>
         )}
       </div>

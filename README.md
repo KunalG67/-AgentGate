@@ -1,5 +1,8 @@
 # AgentGate
 
+**Live Demo:** https://agentgate-red.vercel.app  
+**Backend API:** https://agentgate-production-49f2.up.railway.app
+
 ## What is AgentGate
 
 AgentGate sits between your AI agents and the outside world. Every time an agent tries to do something (read email, push code, etc.), AgentGate checks if it's allowed. You set the rules. The agent can be allowed through, blocked, or held for your approval.
