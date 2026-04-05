@@ -74,7 +74,7 @@ export default function LiveFeed() {
       if (m.type === "step_up_resolved") {
         setResolvedMap(prev => ({
           ...prev,
-          [m.challenge_id]: m
+          [m.challenge_id]: m.approved ? "approved" : "denied"
         }));
       }
     });
@@ -164,11 +164,7 @@ export default function LiveFeed() {
 
           if (m.type === "step_up") {
             const resolved = m.challenge_id ? resolvedMap[m.challenge_id] : null;
-            const resolution = resolved?.approved
-              ? "approved"
-              : resolved?.approved === false
-              ? "denied"
-              : null;
+            const resolution = resolved === "approved" ? "approved" : resolved === "denied" ? "denied" : null;
             const statusText = resolution === "approved"
               ? "STEP-UP APPROVED"
               : resolution === "denied"
@@ -179,9 +175,9 @@ export default function LiveFeed() {
               : resolution === "denied"
               ? "#FF4444"
               : "#FFA500";
-            const action = resolved?.action || m.action;
-            const params = resolved?.params || m.params;
-            const reason = resolved?.reason || m.reason;
+            const action = m.action;
+            const params = m.params;
+            const reason = m.reason;
             return (
               <div key={stableKey} style={s.stepRow}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

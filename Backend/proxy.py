@@ -59,6 +59,26 @@ async def execute(request: Request, body: ActionRequest, current_user: str = Dep
             return {"allowed": False, "reason": "awaiting approval"}
 
         if challenge.status in ("denied", "expired", "consumed"):
+            # Log the denial in audit log
+            denial_log = AuditLog(
+                action=challenge.action,
+                params=challenge.params,
+                allowed=False,
+                reason=f"Step-up {challenge.status} by user",
+                user_id=current_user,
+                step_up_required=True,
+            )
+            db.add(denial_log)
+            db.commit()
+            db.refresh(denial_log)
+            await broadcast({
+                "type": "action",
+                "action": challenge.action,
+                "params": challenge.params,
+                "allowed": False,
+                "reason": f"Step-up {challenge.status} by user",
+                "timestamp": denial_log.timestamp.isoformat(),
+            })
             return {"allowed": False, "reason": "denied by user"}
 
         if challenge.status != "approved":
