@@ -151,13 +151,14 @@ async def callback(
 
     # Store the Auth0 sub (e.g., "google-oauth2|123456") in the cookie
     # This is what Auth0 Management API expects for user lookups
-    redir = RedirectResponse(FRONTEND_URL)
+    redir = RedirectResponse(FRONTEND_URL.rstrip("/"))
     redir.set_cookie(
         key="ag_auth_user",
         value=user_id,
         max_age=60 * 60 * 24 * 7,
-        samesite="lax",
+        samesite="none",
         path="/",
-        httponly=True,
+        httponly=False,
+        secure=True,
     )
     return redir
