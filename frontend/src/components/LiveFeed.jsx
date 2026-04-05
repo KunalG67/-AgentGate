@@ -177,7 +177,22 @@ export default function LiveFeed() {
             return (
               <div key={stableKey} style={s.stepRow}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: statusColor, letterSpacing: "1px" }}>{statusText}</span>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <span style={{ color: statusColor, letterSpacing: "1px" }}>{statusText}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "2px" }}>
+                      <span style={{ color: "#a0b4c8", letterSpacing: "1px" }}>{m.action}</span>
+                    </div>
+                    <div style={{
+                      fontSize: "10px",
+                      color: "#8892a4",
+                      fontFamily: "monospace",
+                      marginTop: "2px",
+                      letterSpacing: "0.5px"
+                    }}>
+                      {getParamSummary(m.action, m.params)}
+                    </div>
+                    {m.reason && <div style={{ color: "#4a6080", fontSize: "10px", marginTop: "3px" }}>{m.reason}</div>}
+                  </div>
                   {!resolution && (
                     <button
                       onClick={() => setStepUp(m)}
@@ -187,7 +202,6 @@ export default function LiveFeed() {
                     </button>
                   )}
                 </div>
-                <div style={{ color: "#6a6a4a", fontSize: "10px", marginTop: "4px" }}>{m.action}</div>
               </div>
             );
           }
