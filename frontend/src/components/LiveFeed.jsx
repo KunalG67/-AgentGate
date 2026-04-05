@@ -74,7 +74,7 @@ export default function LiveFeed() {
       if (m.type === "step_up_resolved") {
         setResolvedMap(prev => ({
           ...prev,
-          [m.challenge_id]: m.approved ? "approved" : "denied"
+          [m.challenge_id]: m
         }));
       }
     });
@@ -163,7 +163,12 @@ export default function LiveFeed() {
           }
 
           if (m.type === "step_up") {
-            const resolution = m.challenge_id ? resolvedMap[m.challenge_id] : null;
+            const resolved = m.challenge_id ? resolvedMap[m.challenge_id] : null;
+            const resolution = resolved?.approved
+              ? "approved"
+              : resolved?.approved === false
+              ? "denied"
+              : null;
             const statusText = resolution === "approved"
               ? "STEP-UP APPROVED"
               : resolution === "denied"
@@ -174,13 +179,16 @@ export default function LiveFeed() {
               : resolution === "denied"
               ? "#FF4444"
               : "#FFA500";
+            const action = resolved?.action || m.action;
+            const params = resolved?.params || m.params;
+            const reason = resolved?.reason || m.reason;
             return (
               <div key={stableKey} style={s.stepRow}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <span style={{ color: statusColor, letterSpacing: "1px" }}>{statusText}</span>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "2px" }}>
-                      <span style={{ color: "#a0b4c8", letterSpacing: "1px" }}>{m.action}</span>
+                      <span style={{ color: "#a0b4c8", letterSpacing: "1px" }}>{action}</span>
                     </div>
                     <div style={{
                       fontSize: "10px",
@@ -189,9 +197,9 @@ export default function LiveFeed() {
                       marginTop: "2px",
                       letterSpacing: "0.5px"
                     }}>
-                      {getParamSummary(m.action, m.params)}
+                      {getParamSummary(action, params)}
                     </div>
-                    {m.reason && <div style={{ color: "#4a6080", fontSize: "10px", marginTop: "3px" }}>{m.reason}</div>}
+                    {reason && <div style={{ color: "#4a6080", fontSize: "10px", marginTop: "3px" }}>{reason}</div>}
                   </div>
                   {!resolution && (
                     <button

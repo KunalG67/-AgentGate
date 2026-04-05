@@ -71,6 +71,9 @@ async def resolve_challenge(challenge_id: str, approved: bool, db: Session) -> d
         "type": "step_up_resolved",
         "challenge_id": challenge_id,
         "approved": approved,
+        "action": challenge.action,
+        "params": challenge.params,
+        "reason": challenge.reason if hasattr(challenge, 'reason') else None,
     })
 
     return {"challenge_id": challenge_id, "status": challenge.status}
