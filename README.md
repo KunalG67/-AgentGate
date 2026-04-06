@@ -11,7 +11,7 @@ The demo agent in agent/agent.py simulates a compromised or misconfigured AI ass
 
 ## Demo Video
 
-▶️ [Watch the 3-minute demo](YOUR_YOUTUBE_LINK_HERE)
+▶️ [Watch the 3-minute demo](https://youtu.be/VCGC9RMXZN4)
 
 > Shows the full agent demo: 10 actions intercepted, 2 blocked, 2 step-up approvals, live policy enforcement.
 

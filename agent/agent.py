@@ -241,7 +241,7 @@ if __name__ == "__main__":
     pending_stepup.clear()
 
     demo_mode = "--demo" in sys.argv
-    delay = 4 if demo_mode else 2
+    delay = 1
 
     print()
     print("╔══════════════════════════════════════════════╗")
