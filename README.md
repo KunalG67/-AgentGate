@@ -76,7 +76,7 @@ DATABASE_URL=postgresql://username:password@localhost:5432/agentgate
 
 # APIs
 GROQ_API_KEY=your-groq-api-key
-GEMINI_API_KEY=your-gemini-api-key
+
 
 # User IDs (from Auth0, with provider prefix)
 GMAIL_USER_ID=google-oauth2|your-user-id
