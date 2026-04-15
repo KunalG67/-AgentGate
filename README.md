@@ -5,6 +5,8 @@
 
 ## What is AgentGate
 
+"Prevents AI agents from executing unsafe actions (emails, API calls, code pushes) without user approval.”
+
 AgentGate sits between your AI agents and the outside world. Every time an agent tries to do something (read email, push code, etc.), AgentGate checks if it's allowed. You set the rules. The agent can be allowed through, blocked, or held for your approval.
 
 The demo agent in agent/agent.py simulates a compromised or misconfigured AI assistant running 10 actions. In a real deployment, you would replace this with any AI agent like LangChain, AutoGPT, Claude, GPT-4 with tools, or any custom agent. AgentGate works as a proxy layer - your agent just sends HTTP requests to /execute instead of calling APIs directly. The policy engine, Token Vault integration, step-up auth, and audit trail all work the same regardless of what agent is behind it.
